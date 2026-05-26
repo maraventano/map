@@ -86,15 +86,15 @@ latte. Nobody asked him to.
 // ---------------------------------------------------------------------------
 
 const TOOLS = [
+  ...READ_TOOLS,
+  ...PAY_TOOLS,
+  ...PUBLISH_TOOLS,
   {
     name: "start-here",
     description:
       "Orientation for MAP (Maraventano Agent Protocol): the three parts — read (find any merchant), pay (pay any merchant), publish (be found) — the CleanRead shape, the three outcomes, and the teacher-not-butler boundary. Start here.",
     inputSchema: { type: "object", properties: {} },
   },
-  ...READ_TOOLS,
-  ...PAY_TOOLS,
-  ...PUBLISH_TOOLS,
 ];
 
 const HANDLERS = {
