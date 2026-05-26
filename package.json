@@ -1,11 +1,12 @@
 {
   "name": "@maraventano/map",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "mcpName": "io.github.maraventano/map",
+  "homepage": "https://www.lisa-maraventano.com/map",
   "publishConfig": {
     "access": "public"
   },
-  "description": "MAP (Maraventano Agent Protocol): one MCP server to navigate agent commerce — read (find any merchant: decode any product URL into one CleanRead), pay (use the wallet you already have), and publish (be found: serve your own catalog). Teacher, not butler — it reads, explains, persists, and serves; it never signs, pays, or holds keys.",
+  "description": "MAP (Maraventano Agent Protocol): a subtractive MCP server for agent commerce — read (find any merchant: decode any product URL into one CleanRead), pay (use the wallet you already have), and publish (be found: serve your own catalog). Teacher, not butler — it reads, explains, persists, and serves; it never signs, pays, or holds keys.",
   "type": "module",
   "main": "index.js",
   "bin": {

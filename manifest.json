@@ -1,0 +1,25 @@
+{
+  "manifest_version": "0.2",
+  "name": "map",
+  "display_name": "MAP — Maraventano Agent Protocol",
+  "version": "1.0.2",
+  "description": "A subtractive MCP for agent commerce: read · pay · publish. Teacher, not butler.",
+  "author": {
+    "name": "Lisa Maraventano"
+  },
+  "homepage": "https://github.com/maraventano/map",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maraventano/map"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/index.js"],
+      "env": {}
+    }
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}
