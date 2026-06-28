@@ -119,6 +119,15 @@ function tryParseChallenge(input) {
   return null;
 }
 
+// A parsed challenge only counts as "usable" if it carries a non-empty accepts[]
+// array. Some servers return a truthy-but-empty body like `{}` or `{"error":...}`
+// while putting the real x402 challenge in the PAYMENT-REQUIRED header — without
+// this guard the body would short-circuit a `||` selector and the header would
+// be silently ignored.
+function usableChallenge(ch) {
+  return ch && Array.isArray(ch.accepts) && ch.accepts.length ? ch : null;
+}
+
 function networkFamily(network) {
   if (!network) return "unknown";
   if (network.startsWith("eip155:")) return "evm";
@@ -461,9 +470,15 @@ async function decodeMerchant(url) {
   }
 
   // x402 payment challenge (the autonomous path).
+  // Pick whichever of body / PAYMENT-REQUIRED header actually carries a usable
+  // accepts[] array. CDP-facilitated endpoints often return an empty `{}` body
+  // and put the real challenge in the base64 header — a plain `||` would
+  // short-circuit on the truthy-but-unusable parsed body and lose the header.
   if (status === 402 || headerChallenge) {
-    const ch = tryParseChallenge(body) || tryParseChallenge(headerChallenge);
-    if (ch && Array.isArray(ch.accepts) && ch.accepts.length) {
+    const bodyCh = usableChallenge(tryParseChallenge(body));
+    const headerCh = usableChallenge(tryParseChallenge(headerChallenge));
+    const ch = bodyCh || headerCh;
+    if (ch) {
       return buildX402Read(read, ch);
     }
     read.reason = "Got a 402 / payment challenge but couldn't parse a usable x402 'accepts' array.";

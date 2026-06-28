@@ -524,7 +524,7 @@ x402 is a payment protocol that uses the HTTP 402 ("Payment Required") status co
 1. You (an AI agent) hit a URL like GET https://example.com/premium-thing
 2. The server responds with HTTP 402 and a \`PAYMENT-REQUIRED\` header
 3. That header contains a base64-encoded challenge: how much to pay, in what asset, on what chain, to whose wallet, and by when
-4. You decode it, sign a payment authorization with your wallet, and retry the request with an \`X-PAYMENT\` header
+4. You decode it, sign a payment authorization with your wallet, and retry the request with a \`PAYMENT-SIGNATURE\` header (x402 v2; some legacy merchants may also accept \`X-PAYMENT\`)
 5. The server verifies the signature, settles the payment on-chain, and returns the content in the same response
 
 **Key properties:**

@@ -112,7 +112,7 @@ if (_dupes.length) {
 }
 
 const server = new Server(
-  { name: "maraventano-agent-protocol", version: "1.0.0" },
+  { name: "maraventano-agent-protocol", version: "1.0.3" },
   { capabilities: { tools: {} } }
 );
 
@@ -135,5 +135,5 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 const transport = new StdioServerTransport();
 await server.connect(transport);
 console.error(
-  `MAP — Maraventano Agent Protocol — MCP v1.0.0 — read · pay · publish — ${TOOLS.length} tools on stdio`
+  `MAP — Maraventano Agent Protocol — MCP v1.0.3 — read · pay · publish — ${TOOLS.length} tools on stdio`
 );

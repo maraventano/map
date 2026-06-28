@@ -1,6 +1,6 @@
 {
   "name": "@maraventano/map",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "mcpName": "io.github.maraventano/map",
   "homepage": "https://www.lisa-maraventano.com/map",
   "publishConfig": {
@@ -17,7 +17,11 @@
     "src",
     "docs",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json",
+    "manifest.json",
+    "smithery.yaml",
+    "glama.json"
   ],
   "scripts": {
     "start": "node index.js",
