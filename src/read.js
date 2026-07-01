@@ -13,10 +13,10 @@
  *
  * Rail-agnostic by design; conservative in detection. The CleanRead schema can
  * describe ANY agent-payable rail (x402, ap2, acp, coinbase, stripe, http-json,
- * walletconnect, human_checkout, unknown) — but v1 only *detects* x402. The
- * others are reserved schema values until they expose stable, machine-readable
- * signals MAP can verify. MAP never infers a rail from branding, checkout
- * buttons, script tags, marketing copy, or platform names; if no verifiable
+ * walletconnect, human_checkout, unknown). v1.0.x detects x402 reliably;
+ * ap2/acp/ucp detectors are on the v1.1 roadmap. Other rails remain reserved
+ * schema values. MAP never infers a rail from branding, checkout buttons,
+ * script tags, marketing copy, or platform names; if no verifiable
  * machine-readable rail is detected, the outcome is human_checkout.
  *
  * False human_checkout is acceptable in v1. False autonomous is dangerous and
@@ -60,8 +60,8 @@ function blankRead(sourceUrl) {
     available: "unknown", // "in_stock" | "out_of_stock" | "unknown"
     // rail (rail-agnostic schema): "x402" | "ap2" | "acp" | "coinbase" |
     // "stripe" | "http-json" | "walletconnect" | "human_checkout" | "unknown".
-    // v1 DETECTS "x402" only; all other rails are reserved until they expose
-    // verifiable machine-readable signals. Non-x402 reads as "human_checkout".
+    // v1.0.x DETECTS "x402" only; ap2/acp/ucp detectors on the v1.1 roadmap.
+    // Non-x402 reads as "human_checkout".
     payable: { rail: "unknown", payTo: null, instruction: PAY_HUMAN },
     outcome: "unreadable", // "autonomous" | "human_checkout" | "unreadable"
     reason: null, // why, when not autonomous

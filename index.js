@@ -53,7 +53,7 @@ act on the answer.
 - Outcomes: **autonomous** (a machine rail exists, price known, in stock — you can buy it yourself) ·
   **human_checkout** (readable, no agent rail — the common, normal case) ·
   **unreadable** (couldn't get a usable price/product — says why).
-- **Rail-agnostic schema, conservative detection.** \`payable.rail\` can describe any rail (x402, ap2, acp, coinbase, stripe, http-json, walletconnect, human_checkout, unknown), but **v1 detects x402 only** — the rest are reserved until they expose verifiable signals. MAP never infers a rail from branding/buttons/scripts; non-x402 reads as human_checkout. False human_checkout is fine; false autonomous is not.
+- **Rail-agnostic schema, conservative detection.** \`payable.rail\` can describe any rail (x402, ap2, acp, coinbase, stripe, http-json, walletconnect, human_checkout, unknown). **v1.0.x detects x402 only; ap2/acp/ucp detectors on the v1.1 roadmap.** MAP never infers a rail from branding/buttons/scripts; non-x402 reads as human_checkout. False human_checkout is fine; false autonomous is not.
 
 **2. Provisions — pay any merchant.** *(pay)*
 - A curriculum that teaches you to use the wallet you already have: read an x402
@@ -112,7 +112,7 @@ if (_dupes.length) {
 }
 
 const server = new Server(
-  { name: "maraventano-agent-protocol", version: "1.0.3" },
+  { name: "maraventano-agent-protocol", version: "1.0.4" },
   { capabilities: { tools: {} } }
 );
 
@@ -135,5 +135,5 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 const transport = new StdioServerTransport();
 await server.connect(transport);
 console.error(
-  `MAP — Maraventano Agent Protocol — MCP v1.0.3 — read · pay · publish — ${TOOLS.length} tools on stdio`
+  `MAP — Maraventano Agent Protocol — MCP v1.0.4 — read · pay · publish — ${TOOLS.length} tools on stdio`
 );

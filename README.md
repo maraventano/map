@@ -37,7 +37,7 @@ Input a product `url`. Returns ONE shape (CleanRead):
   "price":  { "total": 1.99, "currency": "USDC" },                // total if knowable, else null
   "available": "in_stock",                                        // in_stock | out_of_stock | unknown
   "payable": {                                                    // can an agent pay this itself?
-    "rail": "x402",                                               // schema (rail-agnostic): x402 | ap2 | acp | coinbase | stripe | http-json | walletconnect | human_checkout | unknown.  v1 DETECTS x402 only; the rest are reserved.
+    "rail": "x402",                                               // schema (rail-agnostic): x402 | ap2 | acp | coinbase | stripe | http-json | walletconnect | human_checkout | unknown.  v1.0.x DETECTS x402 only; ap2/acp/ucp detectors on the v1.1 roadmap.
     "payTo": { "kind": "evm-address", "value": "0x…", "chain": "eip155:8453" },
     "instruction": "Agent-payable via x402 … see this kit's wallet lessons (read-this-challenge, how-do-i-pay)."
   },
@@ -56,7 +56,7 @@ Input a product `url`. Returns ONE shape (CleanRead):
 
 **How it reads (v1):** JSON-LD (`schema.org` Product/Offer) → OpenGraph product tags → x402 402 challenge → else `unreadable`. Read-only `GET`. It follows **one same-origin redirect** (noted in `cuts` as "followed 1 same-origin redirect") so canonical→slug URLs resolve; it **refuses cross-origin redirects and chains** (those become a `cuts` note, not a silent follow) — you can't be silently bounced off the merchant's own host.
 
-**MAP is payment-rail agnostic by design.** The `payable.rail` schema can describe any agent-payable rail — `x402`, `ap2`, `acp`, `coinbase`, `stripe`, `http-json`, `walletconnect`, `human_checkout`, `unknown` — but **v1 only detects `x402` reliably.** The other rails are *reserved schema values* until they expose stable, machine-readable signals MAP can verify. MAP never infers a rail from branding, checkout buttons, script tags, marketing copy, or platform names; if no verifiable machine-readable rail is detected, the outcome is `human_checkout`. So a normal Shopify/Stripe page reads as `human_checkout`, correctly.
+**MAP is payment-rail agnostic by design.** The `payable.rail` schema can describe any agent-payable rail — `x402`, `ap2`, `acp`, `coinbase`, `stripe`, `http-json`, `walletconnect`, `human_checkout`, `unknown`. **v1.0.x detects `x402` reliably; `ap2`/`acp`/`ucp` detectors are on the v1.1 roadmap.** Other rails remain reserved schema values. MAP never infers a rail from branding, checkout buttons, script tags, marketing copy, or platform names; if no verifiable machine-readable rail is detected, the outcome is `human_checkout`. So a normal Shopify/Stripe page reads as `human_checkout`, correctly.
 
 **False `human_checkout` is acceptable in v1. False `autonomous` is dangerous and unacceptable** — which is why detection stays conservative. The protocol is rail-agnostic in schema and roadmap; x402 is not baked into its identity, only into v1's detectors.
 

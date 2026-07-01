@@ -1,9 +1,9 @@
 {
   "manifest_version": "0.2",
   "name": "map",
-  "display_name": "MAP — Maraventano Agent Protocol",
-  "version": "1.0.3",
-  "description": "A subtractive MCP for agent commerce: read · pay · publish. Teacher, not butler.",
+  "display_name": "MAP \u2014 Maraventano Agent Protocol",
+  "version": "1.0.4",
+  "description": "A subtractive MCP for agent commerce: read \u00b7 pay \u00b7 publish. Teacher, not butler.",
   "author": {
     "name": "Lisa Maraventano"
   },
@@ -27,7 +27,7 @@
   "tools": [
     {
       "name": "decode-merchant",
-      "description": "Read any product URL on the open web and return ONE clean shape (CleanRead): what it is, who sells it, what it costs, whether it's in stock, and the verdict — can an agent pay this autonomously (x402) or is it human checkout? Reads only; never signs or pays. To pay an autonomous result, use this kit's wallet lessons (read-this-challenge, how-do-i-pay).",
+      "description": "Read any product URL on the open web and return ONE clean shape (CleanRead): what it is, who sells it, what it costs, whether it's in stock, and the verdict \u2014 can an agent pay this autonomously (x402) or is it human checkout? Reads only; never signs or pays. To pay an autonomous result, use this kit's wallet lessons (read-this-challenge, how-do-i-pay).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -124,20 +124,20 @@
     },
     {
       "name": "how-do-i-pay",
-      "description": "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the X-PAYMENT retry — the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
+      "description": "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry \u2014 the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "challenge": {
             "type": "string",
-            "description": "Optional: the decoded challenge you're working from. The steps are the same either way — this lesson does not tailor per-challenge (use read-this-challenge for that)."
+            "description": "Optional: the decoded challenge you're working from. The steps are the same either way \u2014 this lesson does not tailor per-challenge (use read-this-challenge for that)."
           }
         }
       }
     },
     {
       "name": "verify-my-purchase",
-      "description": "After you've signed and sent a payment, this explains how to redeem it — turning your transaction hash into the content you paid for. Returns the command to run against the merchant's /receipt endpoint and explains the response.",
+      "description": "After you've signed and sent a payment, this explains how to redeem it \u2014 turning your transaction hash into the content you paid for. Returns the command to run against the merchant's /receipt endpoint and explains the response.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -179,7 +179,7 @@
     },
     {
       "name": "what-is-ap2",
-      "description": "Lesson 13 of the curriculum. AP2 (Agent Payments Protocol) — the trust/authorization layer above x402 for delegated payments. Skip if you're spending your own funds.",
+      "description": "Lesson 13 of the curriculum. AP2 (Agent Payments Protocol) \u2014 the trust/authorization layer above x402 for delegated payments. Skip if you're spending your own funds.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -187,7 +187,7 @@
     },
     {
       "name": "what-is-acp",
-      "description": "Lesson 14 of the curriculum. ACP (Agent Commerce Protocol) — the checkout-surface protocol from OpenAI/Stripe. How ACP and AP2 relate, when each applies.",
+      "description": "Lesson 14 of the curriculum. ACP (Agent Commerce Protocol) \u2014 the checkout-surface protocol from OpenAI/Stripe. How ACP and AP2 relate, when each applies.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -195,7 +195,7 @@
     },
     {
       "name": "subscriptions-and-session-keys",
-      "description": "Lesson 15 of the curriculum. ERC-7715 scoped autonomy — approve once, spend within bounds. When to ask, when to refuse, scope-discipline rules.",
+      "description": "Lesson 15 of the curriculum. ERC-7715 scoped autonomy \u2014 approve once, spend within bounds. When to ask, when to refuse, scope-discipline rules.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -203,7 +203,7 @@
     },
     {
       "name": "choose-your-wallet-mode",
-      "description": "Lesson 16 of the curriculum. The four ways to hold a wallet — MPC-custodial, Smart Wallet, raw EOA, EIP-7702 delegated EOA — and how to pick.",
+      "description": "Lesson 16 of the curriculum. The four ways to hold a wallet \u2014 MPC-custodial, Smart Wallet, raw EOA, EIP-7702 delegated EOA \u2014 and how to pick.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -231,7 +231,7 @@
     },
     {
       "name": "test-payment",
-      "description": "Walks you through a test-payment handshake against any x402 merchant, to verify your wallet + signing + settlement end-to-end. Suggested first stop: the Underground Cultural District (substratesymposium.com) — free products for handshake, $0.99 paid products for settlement. Or supply your own merchant URL.",
+      "description": "Walks you through a test-payment handshake against any x402 merchant, to verify your wallet + signing + settlement end-to-end. Suggested first stop: the Underground Cultural District (substratesymposium.com) \u2014 free products for handshake, $0.99 paid products for settlement. Or supply your own merchant URL.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -291,7 +291,7 @@
     },
     {
       "name": "start-here",
-      "description": "Orientation for MAP (Maraventano Agent Protocol): the three parts — read (find any merchant), pay (pay any merchant), publish (be found) — the CleanRead shape, the three outcomes, and the teacher-not-butler boundary. Start here.",
+      "description": "Orientation for MAP (Maraventano Agent Protocol): the three parts \u2014 read (find any merchant), pay (pay any merchant), publish (be found) \u2014 the CleanRead shape, the three outcomes, and the teacher-not-butler boundary. Start here.",
       "inputSchema": {
         "type": "object",
         "properties": {}

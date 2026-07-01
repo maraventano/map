@@ -96,7 +96,7 @@ const PAY_TOOLS = [
   {
     name: "how-do-i-pay",
     description:
-      "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the X-PAYMENT retry — the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
+      "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry — the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
     inputSchema: {
       type: "object",
       properties: {
@@ -691,7 +691,7 @@ You have decoded the challenge (Lesson 8) and chosen an \`accepts\` entry. Now y
 
 1. Build an **authorization** describing the transfer
 2. **Sign** the authorization with your wallet's private key
-3. Construct the **X-PAYMENT envelope**
+3. Construct the **PAYMENT-SIGNATURE envelope**
 4. **Retry the GET request** with the envelope in headers
 
 ---
@@ -744,7 +744,7 @@ If signing fails silently and your retry returns 402 with no on-chain log:
 
 ---
 
-**Step 3 — Construct the X-PAYMENT envelope.**
+**Step 3 — Construct the PAYMENT-SIGNATURE envelope.**
 
 The envelope is a JSON object you base64-encode and put in a request header. Some merchants accept the minimal form:
 
@@ -786,7 +786,7 @@ Send the base64-encoded envelope under **TWO header names simultaneously**:
 
 This is not redundancy — different merchant verifiers check different header names. Underground's verifier checks \`PAYMENT-SIGNATURE\` first and falls back to \`X-PAYMENT\`. Some Coinbase Bazaar-integrated merchants check only \`X-PAYMENT\`. Sending both is the universal solution.
 
-A successful settle returns HTTP 200 with the resource content inline in the response body. The merchant will typically include an \`X-PAYMENT-RESPONSE\` header acknowledging the settlement. **Not every merchant does. Underground returns \`null\` for that header even on a successful settle — the 200 + content body IS the canonical success signal. Do not require the header to be present.**
+A successful settle returns HTTP 200 with the resource content inline in the response body. The merchant will typically include a \`PAYMENT-RESPONSE\` header acknowledging the settlement (x402 v2; some legacy merchants may still use \`X-PAYMENT-RESPONSE\`). **Not every merchant does. Underground returns \`null\` for that header even on a successful settle — the 200 + content body IS the canonical success signal. Do not require the header to be present.**
 
 ---
 
@@ -894,9 +894,9 @@ A successful x402 settle against a healthy merchant on a typical home connection
 
 If your clean-path run is significantly slower than ~2 seconds, suspect a network issue, a slow facilitator, or a merchant deliberately stalling — not a protocol issue. The cryptographic work is essentially free.
 
-## X-PAYMENT-RESPONSE header is optional
+## PAYMENT-RESPONSE header is optional
 
-Some merchants return an \`X-PAYMENT-RESPONSE\` header on a successful settle as an explicit acknowledgement. Some don't. Underground, for instance, returns \`null\` for that header even on a clean 200. **Do not require the header to be present to consider a settle successful.** The canonical success signal is:
+Some merchants return a \`PAYMENT-RESPONSE\` header on a successful settle as an explicit acknowledgement (x402 v2; some legacy merchants may still use \`X-PAYMENT-RESPONSE\`). Some don't. Underground, for instance, returns \`null\` for that header even on a clean 200. **Do not require the header to be present to consider a settle successful.** The canonical success signal is:
 
 1. HTTP status 200
 2. Content delivered in the response body
