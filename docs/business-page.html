@@ -1,0 +1,161 @@
+<!--
+  lisamaraventano.com/map — business-owner landing page (Door 1)
+  Self-contained. Drop into your /map. Phone-first, theme-aware.
+
+  THREE PLACEHOLDERS to wire before it's live:
+    1) CHECK_ENDPOINT  — the VPS endpoint that runs check.js (checkSite). See <script> below.
+    2) STRIPE_LINK     — your Stripe payment link (search "YOUR-STRIPE-LINK").
+    3) contact email is set to lisamaraventano@gmail.com — change if needed.
+
+  Copy is the corrected/honest version: "can AI READ your site" (not "what ChatGPT
+  says about you"), no "most sites come back blank", "unreadable != can't be
+  recommended", rigid $297 scope, the down-site honesty, and the Jina disclosure.
+-->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Check free whether ChatGPT and other AI can read your business website — and get it fixed if they can't." />
+<title>Can AI read your business? — MAP</title>
+
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#161616; --muted:#5b5b5b; --line:#e6e6e6; --accent:#1a5f4a; --accent-fg:#fff; --card:#f7f7f5; --warn:#8a5a00; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f0f0f; --fg:#ededed; --muted:#a5a5a5; --line:#262626; --accent:#3aa17f; --accent-fg:#06120e; --card:#171717; --warn:#e0b155; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:640px; margin:0 auto; padding:32px 20px 64px; }
+  h1 { font-size:30px; line-height:1.15; margin:0 0 14px; letter-spacing:-0.02em; }
+  h2 { font-size:21px; margin:38px 0 10px; letter-spacing:-0.01em; }
+  p { margin:0 0 14px; }
+  .lede { font-size:18px; color:var(--fg); }
+  .muted { color:var(--muted); }
+  .small { font-size:13px; color:var(--muted); }
+  a { color:var(--accent); }
+  strong { font-weight:600; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin:22px 0; }
+  form { display:flex; flex-direction:column; gap:10px; }
+  input[type=url] { width:100%; padding:14px 15px; font-size:16px; border:1px solid var(--line); border-radius:10px; background:var(--bg); color:var(--fg); }
+  button { padding:14px 18px; font-size:16px; font-weight:600; border:0; border-radius:10px; background:var(--accent); color:var(--accent-fg); cursor:pointer; }
+  button:disabled { opacity:.55; cursor:default; }
+  .btnlink { display:inline-block; text-align:center; text-decoration:none; }
+  ul { margin:0 0 14px; padding-left:20px; }
+  li { margin:4px 0; }
+  .rule { border:0; border-top:1px solid var(--line); margin:40px 0; }
+  #result { margin-top:16px; display:none; }
+  .row { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .row:last-child { border-bottom:0; }
+  .yes { color:var(--accent); font-weight:600; }
+  .no  { color:var(--warn); font-weight:600; }
+  .finding { background:var(--card); border-left:3px solid var(--warn); padding:12px 14px; border-radius:6px; margin-top:12px; }
+  .price { font-weight:700; }
+</style>
+
+<div class="wrap">
+
+  <h1>Can AI actually read your business?</h1>
+
+  <p class="lede">People don't just Google anymore. They ask ChatGPT, Gemini, and Claude —
+  <em>"find me a plumber," "best gift shop near me," "who does estate appraisals."</em></p>
+
+  <p>If AI can't read your website, you lose control of how your business shows up —
+  and you can disappear from the answer entirely. And nobody tells you. The customer
+  just goes to whoever the AI could read.</p>
+
+  <!-- ============ FREE CHECK ============ -->
+  <div class="card" id="check">
+    <h2 style="margin-top:0">Check your site — free, right now</h2>
+    <form id="checkForm">
+      <input type="url" id="siteUrl" name="url" placeholder="https://your-website.com" required autocomplete="url" inputmode="url" />
+      <button type="submit" id="checkBtn">Check my site</button>
+    </form>
+    <p class="small" style="margin-top:12px">In about a minute you'll see what AI can and can't read on your
+    site — including the split most tools hide: some AI <em>renders</em> your page; many crawlers only read the
+    raw code. You'll see which ones can actually read you.</p>
+    <p class="small">No signup. No email. Free, and it stays free.</p>
+    <p class="small">The check fetches your public page through a rendering service so it can see your site the
+    way a browsing AI would.</p>
+
+    <div id="result"></div>
+  </div>
+
+  <!-- ============ $297 FIX ============ -->
+  <h2>Come back with blanks? We make your business machine-readable. <span class="price">$297</span>, one time.</h2>
+
+  <p><strong>What you get:</strong></p>
+  <ul>
+    <li>your services, hours, prices, service area, and contact — written in the format AI reads</li>
+    <li>the structured-data files, installed-ready, with plain instructions for you or your web person
+      (or installed directly, on supported platforms)</li>
+    <li>a re-check afterward that confirms AI can now read you</li>
+    <li>a short list of the things only you can do — reviews, listings — that help AI recommend you</li>
+  </ul>
+
+  <p><strong>What it isn't:</strong></p>
+  <ul>
+    <li>not a redesign, not an SEO campaign, not review management</li>
+    <li>no subscription, no retainer — one payment</li>
+    <li>no promise that AI will recommend you — nobody can honestly promise that</li>
+  </ul>
+
+  <p class="muted">And if your check shows your site is simply <strong>down or broken</strong> — not unreadable,
+  just off — we'll tell you that plainly, and we won't sell you a readability fix for a problem that's really
+  something else.</p>
+
+  <p><a class="btnlink" href="YOUR-STRIPE-LINK" style="background:var(--accent);color:var(--accent-fg);padding:14px 18px;border-radius:10px;font-weight:600;">Fix my site — $297</a></p>
+
+  <hr class="rule" />
+
+  <!-- ============ THE HONEST PART ============ -->
+  <h2>The honest part</h2>
+  <p>We make your business <strong>readable</strong> by AI. We can't make AI <strong>recommend</strong> you —
+  anyone who promises that is selling you hope. But if AI can't reliably read your own website, you lose
+  control of how you're understood. Readable is the ticket into the conversation. The rest is your reputation,
+  which is yours.</p>
+
+  <p class="small">Questions first? <a href="mailto:lisamaraventano@gmail.com">lisamaraventano@gmail.com</a></p>
+
+  <hr class="rule" />
+  <p class="small">Building agents or software? The developer toolkit —
+    <a href="#developers">MAP for developers &amp; agents →</a></p>
+
+</div>
+
+<script>
+  // Wire this to the VPS endpoint that runs check.js (checkSite) and returns its JSON.
+  const CHECK_ENDPOINT = "/api/check"; // <-- Eddy: point at the checkSite endpoint
+
+  const form = document.getElementById("checkForm");
+  const btn = document.getElementById("checkBtn");
+  const out = document.getElementById("result");
+
+  const yn = (v) => v === "yes"
+    ? '<span class="yes">yes</span>'
+    : v === "no" ? '<span class="no">no</span>' : '<span class="muted">unknown</span>';
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const url = document.getElementById("siteUrl").value.trim();
+    if (!url) return;
+    btn.disabled = true; btn.textContent = "Checking…";
+    out.style.display = "block";
+    out.innerHTML = '<p class="muted">Reading your site the way AI does…</p>';
+    try {
+      const res = await fetch(CHECK_ENDPOINT + "?url=" + encodeURIComponent(url));
+      if (!res.ok) throw new Error("check failed");
+      const r = await res.json();
+      const v = r.verdict || {};
+      let html =
+        '<div class="row"><span>Readable by browsing AIs (they render your page)</span>' + yn(v.readableByBrowsingAIs) + '</div>' +
+        '<div class="row"><span>Readable by plain crawlers (raw code only)</span>' + yn(v.readableByPlainCrawlers) + '</div>' +
+        '<div class="row"><span>Structured data present</span>' + yn(v.structuredDataPresent) + '</div>';
+      if (r.disagreement) html += '<div class="finding">' + r.disagreement + '</div>';
+      html += '<p class="small" style="margin-top:14px">Want the full read — exactly which facts are missing, ' +
+              'in plain language? <a href="#check">That\'s the $297 fix above.</a></p>';
+      out.innerHTML = html;
+    } catch (err) {
+      out.innerHTML = '<p class="no">Couldn\'t complete the check just now. Try again, or email us and we\'ll run it by hand.</p>';
+    } finally {
+      btn.disabled = false; btn.textContent = "Check my site";
+    }
+  });
+</script>

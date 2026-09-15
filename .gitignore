@@ -14,3 +14,6 @@ index.phase1.bak.js
 merchant-key-BUILD-SPEC.md
 merchant-key-PHASE2-AND-ASSEMBLY-SPEC.md
 merchant-key-handoff-2026-05-25.md
+api-key.env
+*.env
+.env

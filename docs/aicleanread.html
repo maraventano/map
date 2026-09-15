@@ -1,0 +1,134 @@
+<!--
+  aicleanread.com — storefront (human / Stripe door)
+  Flow: enter URL -> FREE preview (heuristic, no key) -> pay $99 (Stripe) -> unlock code.
+  Self-contained, phone-first, theme-aware.
+
+  WIRE BEFORE LIVE (all marked):
+    API_BASE      — the backend that runs previewFree + generate (your app, has the key)
+    STRIPE_LINK   — your Stripe Checkout (pay-to-unlock)
+  Copy is placeholder on the marketing lines — final copy is Cipher's lane.
+-->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="AIs read your website differently than people do. Make sure they can see your business — get the machine-readable code in one paste." />
+<title>AI Clean Read — make your site visible to AI</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔍%3C/text%3E%3C/svg%3E" />
+
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#141414; --muted:#606060; --line:#e6e6e6; --accent:#0f5c46; --accent-fg:#fff; --card:#f6f6f4; --ok:#0f5c46; --miss:#9a6a00; }
+  @media (prefers-color-scheme: dark){ :root{ --bg:#0e0e0e; --fg:#ededed; --muted:#a6a6a6; --line:#262626; --accent:#37a582; --accent-fg:#06120e; --card:#161616; --ok:#37a582; --miss:#d9a441; } }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:620px;margin:0 auto;padding:40px 20px 72px}
+  h1{font-size:32px;line-height:1.12;letter-spacing:-.02em;margin:0 0 14px}
+  .lede{font-size:19px;color:var(--fg);margin:0 0 10px}
+  p{margin:0 0 14px} .muted{color:var(--muted)} .small{font-size:13px;color:var(--muted)}
+  form{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+  input[type=url]{width:100%;padding:15px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+  button{padding:15px 18px;font-size:16px;font-weight:600;border:0;border-radius:10px;background:var(--accent);color:var(--accent-fg);cursor:pointer}
+  button:disabled{opacity:.55;cursor:default}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+  .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)} .row:last-child{border-bottom:0}
+  .ok{color:var(--ok);font-weight:600} .miss{color:var(--miss);font-weight:600}
+  pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12px;overflow-x:auto}
+  .copy{font-size:13px;padding:8px 12px;margin-top:6px}
+  .hide{display:none}
+  .price{font-weight:700}
+</style>
+
+<div class="wrap">
+  <h1>AIs read your site differently than people do.</h1>
+  <p class="lede">When someone asks ChatGPT, Gemini, or Claude to find a business like yours, the AI doesn't see your website the way a person does. If it can't read you, you're not in the answer.</p>
+  <p class="muted">Paste your website. We'll show you what AI can already read — and hand you the code that fixes the rest, auto-built from your own site. One paste. <span class="price">$99</span>, one time.</p>
+  <!-- final copy: Cipher -->
+
+  <form id="f">
+    <input type="url" id="url" placeholder="https://your-website.com" required inputmode="url" autocomplete="url" />
+    <button id="go" type="submit">Check my site — free</button>
+  </form>
+
+  <!-- FREE PREVIEW -->
+  <div id="preview" class="card hide"></div>
+
+  <!-- PAID CODE (after unlock) -->
+  <div id="result" class="card hide"></div>
+
+  <p class="small">We read your public site to build the code. We never touch or host your site — you paste the code yourself. No account, no subscription.</p>
+</div>
+
+<script>
+  // --- WIRE THESE ---
+  const API_BASE = "";                 // e.g. "https://api.aicleanread.com" — backend running emit.js
+  const STRIPE_LINK = "https://buy.stripe.com/bJe3cv2vw3NA1zl3aj8oh1R"; // LIVE $99 unlock
+  // ------------------
+
+  const f = document.getElementById("f");
+  const go = document.getElementById("go");
+  const prev = document.getElementById("preview");
+  const res = document.getElementById("result");
+  const yn = (b) => b ? '<span class="ok">found</span>' : '<span class="miss">missing</span>';
+
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const url = document.getElementById("url").value.trim();
+    if (!url) return;
+    go.disabled = true; go.textContent = "Reading your site…";
+    res.classList.add("hide"); prev.classList.remove("hide");
+    prev.innerHTML = '<p class="muted">Reading your site the way an AI would…</p>';
+    try {
+      const r = await fetch(API_BASE + "/api/preview?url=" + encodeURIComponent(url)).then(x=>x.json());
+      const fnd = r.found || {};
+      prev.innerHTML =
+        '<h2 style="margin:0 0 8px;font-size:19px">Here\'s what AI can read on your site</h2>' +
+        '<div class="row"><span>Business name</span>'+yn(fnd.name)+'</div>' +
+        '<div class="row"><span>Contact (phone/email)</span>'+yn(fnd.contact)+'</div>' +
+        '<div class="row"><span>Hours</span>'+yn(fnd.hours)+'</div>' +
+        '<div class="row"><span>Location</span>'+yn(fnd.location)+'</div>' +
+        '<div class="row"><span>Services</span>'+yn(fnd.services)+'</div>' +
+        '<p class="small" style="margin-top:12px">'+(r.note||'')+'</p>' +
+        '<button id="pay">Unlock my code — $99</button>';
+      document.getElementById("pay").onclick = () => startCheckout(url);
+    } catch (err) {
+      prev.innerHTML = '<p class="miss">Couldn\'t read your site just now — try again in a moment.</p>';
+    } finally { go.disabled = false; go.textContent = "Check my site — free"; }
+  });
+
+  // Carry the customer's URL through checkout as base64url in client_reference_id,
+  // so the backend recovers it after payment (see paygate.js). The AFTER-PAYMENT
+  // redirect is configured in the Stripe Payment Link settings to:
+  //   https://aicleanread.com/?session_id={CHECKOUT_SESSION_ID}
+  function startCheckout(url){
+    const ref = btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); // base64url
+    window.location = STRIPE_LINK + "?client_reference_id=" + ref;
+  }
+
+  // On return from a paid Stripe session, verify + generate + show the code.
+  async function unlock(sessionId){
+    prev.classList.add("hide"); res.classList.remove("hide");
+    res.innerHTML = '<p class="muted">Building your machine-readable code…</p>';
+    try {
+      // Backend verifies the Stripe session (paygate) before running generate().
+      const r = await fetch(API_BASE + "/api/generate?session_id=" + encodeURIComponent(sessionId)).then(x=>x.json());
+      if (r.error) throw new Error(r.error);
+      res.innerHTML =
+        '<h2 style="margin:0 0 4px;font-size:19px">Your code is ready</h2>' +
+        '<p class="small">Paste this into your site\'s &lt;head&gt; (every builder has a "custom code" or "header" box).</p>' +
+        '<pre id="tag">'+escapeHtml(r.scriptTag||'')+'</pre>' +
+        '<button class="copy" onclick="copy(\'tag\')">Copy the schema code</button>' +
+        '<h3 style="font-size:15px;margin:20px 0 4px">Optional: /llms.txt</h3>' +
+        '<p class="small">If your platform lets you add files at your site root, save this as <code>llms.txt</code>.</p>' +
+        '<pre id="llms">'+escapeHtml(r.llmsTxt||'')+'</pre>' +
+        '<button class="copy" onclick="copy(\'llms\')">Copy llms.txt</button>' +
+        '<p class="small" style="margin-top:16px">'+escapeHtml(r.instructions||'')+'</p>';
+    } catch(err){
+      res.innerHTML = '<p class="miss">Something went wrong building your code. You paid — email lisamaraventano@gmail.com and we\'ll send it by hand right away.</p>';
+    }
+  }
+
+  function copy(id){ navigator.clipboard.writeText(document.getElementById(id).textContent); }
+  function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // If we came back from a paid checkout (Stripe appends the session id), unlock.
+  const q = new URLSearchParams(location.search);
+  const _sid = q.get("session_id");
+  if (_sid) unlock(_sid);
+</script>
