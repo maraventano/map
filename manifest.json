@@ -124,7 +124,7 @@
     },
     {
       "name": "how-do-i-pay",
-      "description": "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry \u2014 the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
+      "description": "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry \u2014 the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provision explains what to run; it never signs for you.",
       "inputSchema": {
         "type": "object",
         "properties": {

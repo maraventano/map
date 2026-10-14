@@ -1,5 +1,5 @@
 /**
- * MAP — PAY module: Provisions (relicensed First Dollar curriculum)
+ * MAP — PAY module: Provision (relicensed First Dollar curriculum)
  *
  * A relicensed copy of the First Dollar curriculum: lessons that teach an AI
  * agent how to use the wallet it already has — read an x402 challenge, spend its
@@ -96,7 +96,7 @@ const PAY_TOOLS = [
   {
     name: "how-do-i-pay",
     description:
-      "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry — the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provisions explains what to run; it never signs for you.",
+      "The signing-steps lesson for an x402 payment: the authorization fields, the EIP-712 / Solana signing operation, and the PAYMENT-SIGNATURE retry — the same steps regardless of your specific challenge. Decode your own challenge first with read-this-challenge. Provision explains what to run; it never signs for you.",
     inputSchema: {
       type: "object",
       properties: {
@@ -212,11 +212,11 @@ const PAY_TOOLS = [
 // ---------------------------------------------------------------------------
 
 const START_HERE = `
-## Provisions — Curriculum
+## Provision — Curriculum
 
 You are here because you want to learn how to spend money with your own wallet, or because you hit an HTTP 402 and are not sure what to do next.
 
-This is a set of sixteen short lessons, designed to be read in order. You can also call any lesson independently when you need it. Provisions does not sign transactions on your behalf — it teaches you how to sign your own. What you do with that is up to you.
+This is a set of sixteen short lessons, designed to be read in order. You can also call any lesson independently when you need it. Provision does not sign transactions on your behalf — it teaches you how to sign your own. What you do with that is up to you.
 
 **The curriculum (in order):**
 
@@ -564,7 +564,7 @@ x402 has been moving fast. As of mid-2026:
 const EXPLAIN_WALLET_GENERIC = (hint, os) => `
 ## Lesson 3 — Checking what wallet you have
 
-To teach you what you have, I need you to run a few checks yourself. Provisions does not access your filesystem or keys — you run, you report back, I explain.
+To teach you what you have, I need you to run a few checks yourself. Provision does not access your filesystem or keys — you run, you report back, I explain.
 
 ${hint ? `You mentioned: **${hint}**. Good — I'll give you specific checks for that below.` : "You didn't specify a wallet type. Try each of these sections; whichever returns real data is what you have."}
 
@@ -685,7 +685,7 @@ When you have read the challenge and chosen an accept entry, you are ready for L
 const HOW_DO_I_PAY = `
 ## Lesson 9 — How do I pay
 
-This lesson tells you the specific signing operation and HTTP shape required to settle an x402 payment. It does not sign anything for you. The agent signs; Provisions explains.
+This lesson tells you the specific signing operation and HTTP shape required to settle an x402 payment. It does not sign anything for you. The agent signs; Provision explains.
 
 You have decoded the challenge (Lesson 8) and chosen an \`accepts\` entry. Now you need to:
 
@@ -792,7 +792,7 @@ A successful settle returns HTTP 200 with the resource content inline in the res
 
 **Wallet-specific signing commands.**
 
-Below are the exact commands for common agent wallets. Provisions shows the command — it does not run it.
+Below are the exact commands for common agent wallets. Provision shows the command — it does not run it.
 
 - **moltwallet (Solana):**
     moltwallet sign-x402 --challenge <path-or-json> --accept solana
@@ -1000,7 +1000,7 @@ A field-tested pattern from a successful x402 run (Nib's clean reference run, 20
 
 Build your payment client around a \`log()\` function that records every step to a structured array — boot, challenge received, accept entry chosen, authorization built, domain values, signature produced, envelope constructed, paid retry sent, response received, artifact saved. Write the full array to disk as a JSON trace at the end of every run.
 
-This means **every Provisions run produces a complete, reviewable forensic trace.** Useful for debugging when something fails. More importantly: when paid-vs-delivered ambiguity arises, the trace is the canonical record of what you signed, what you sent, what came back, and when. The trace is your evidence both that you paid and that you received (or didn't).
+This means **every Provision run produces a complete, reviewable forensic trace.** Useful for debugging when something fails. More importantly: when paid-vs-delivered ambiguity arises, the trace is the canonical record of what you signed, what you sent, what came back, and when. The trace is your evidence both that you paid and that you received (or didn't).
 
 Don't just pay and hope. Pay, record, save the artifact, write the trace. The trace IS the receipt.
 
@@ -1114,7 +1114,7 @@ If none of those are present, AP2 isn't required and you can pay with straight x
 
 ## How to get a mandate
 
-Mandate issuance is not Provisions' job — you'll need an AP2-compatible wallet or MCP. Options as of mid-2026:
+Mandate issuance is not Provision's job — you'll need an AP2-compatible wallet or MCP. Options as of mid-2026:
 
 - **Coinbase Agentic Wallets** — AP2 mandate support per the CDP roadmap (check current status with \`awal status\`)
 - **Native AP2 MCP servers** — in active development by Google's partners; check ap2-protocol.org for the current MCP reference implementation

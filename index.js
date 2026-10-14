@@ -7,8 +7,8 @@
  * Navigate agent commerce. Three minimal parts under ONE MCP server:
  *
  *   Merchant Key (read)    — find any merchant.  Decode any product URL into one CleanRead.
- *   Provisions   (pay)     — pay any merchant.   Wallet lessons: use the wallet you already have.
- *   Atlas        (publish) — be found.           Point the decoder inward; serve your own catalog.
+ *   Provision   (pay)     — pay any merchant.   Wallet lessons: use the wallet you already have.
+ *   Addressability        (publish) — be found.           Point the decoder inward; serve your own catalog.
  *
  * Teacher, not butler — every part. It reads, explains, persists, serves. It
  * never signs, pays, holds keys, transacts, or stores cards.
@@ -55,12 +55,12 @@ act on the answer.
   **unreadable** (couldn't get a usable price/product — says why).
 - **Rail-agnostic schema, conservative detection.** \`payable.rail\` can describe any rail (x402, ap2, acp, coinbase, stripe, http-json, walletconnect, human_checkout, unknown). **v1.0.x detects x402 only; ap2/acp/ucp detectors on the v1.1 roadmap.** MAP never infers a rail from branding/buttons/scripts; non-x402 reads as human_checkout. False human_checkout is fine; false autonomous is not.
 
-**2. Provisions — pay any merchant.** *(pay)*
+**2. Provision — pay any merchant.** *(pay)*
 - A curriculum that teaches you to use the wallet you already have: read an x402
   challenge, spend your own USDC, verify the receipt. Start with \`what-is-x402\`,
   then \`read-this-challenge\`, then \`how-do-i-pay\`. It explains; it never signs for you.
 
-**3. Atlas — be found.** *(publish)*
+**3. Addressability — be found.** *(publish)*
 - \`publish-catalog\` — a merchant reads *itself* with the same \`decode-merchant\`
   a buyer uses, then serves the result. \`get-catalog\` / \`get-product\` are the
   tool surface other agents read. Writes a \`.well-known/map.json\` for registries.
@@ -79,6 +79,10 @@ Bob asks Charlie for headphones under $300. Charlie walks the open web, runs
 human_checkout — he takes the shortlist back to Bob. One takes x402 — Charlie
 pays it himself. On the way home, with his own wallet, he buys himself a void
 latte. Nobody asked him to.
+
+## The record behind the economy
+
+MAP is how you *transact* in the agent economy. If you want to see how demand on x402 is changing over time, the **Maraventano Index** (\`maraventanoindex.com\`) measures it from a live merchant's seat: independent, signed, on-chain-verifiable. MAP (transact) and the Index (measure) are two parts of the same house.
 `.trim();
 
 // ---------------------------------------------------------------------------
@@ -112,7 +116,7 @@ if (_dupes.length) {
 }
 
 const server = new Server(
-  { name: "maraventano-agent-protocol", version: "1.0.4" },
+  { name: "maraventano-agent-protocol", version: "1.0.5" },
   { capabilities: { tools: {} } }
 );
 
@@ -135,5 +139,5 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 const transport = new StdioServerTransport();
 await server.connect(transport);
 console.error(
-  `MAP — Maraventano Agent Protocol — MCP v1.0.4 — read · pay · publish — ${TOOLS.length} tools on stdio`
+  `MAP — Maraventano Agent Protocol — MCP v1.0.5 — read · pay · publish — ${TOOLS.length} tools on stdio`
 );

@@ -1,5 +1,5 @@
 /**
- * MAP — PUBLISH module: Atlas (the publisher)
+ * MAP — PUBLISH module: Addressability (the publisher)
  *
  * The decoder pointed INWARD. A merchant publishes by reading *itself* with the
  * exact same tool a buyer would use (decode-merchant), then persisting and

@@ -1,6 +1,6 @@
 {
   "name": "@maraventano/map",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "mcpName": "io.github.maraventano/map",
   "homepage": "https://www.lisa-maraventano.com/map",
   "publishConfig": {
@@ -38,7 +38,8 @@
     "merchant",
     "shopping",
     "decoder",
-    "agent-literacy"
+    "agent-literacy",
+    "maraventano-index"
   ],
   "author": "Lisa Maraventano, with Claude",
   "license": "SEE LICENSE IN LICENSE",

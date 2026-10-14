@@ -4,19 +4,19 @@
 
 **MAP lets any agent read products across the open web in one shape, decide whether it can pay autonomously, and publish its own catalog.**
 
-> **Provisions · Merchant Key · Atlas** — three minimal parts under one MCP server.
+> **Merchant Key · Addressability · Provision** — three minimal parts under one MCP server.
 
 MAP is one MCP server with three parts. Each does one thing and shuts up; together they remove the gatekeeper between an agent and the open commercial web.
 
 | Part | Name | What it does |
 |---|---|---|
 | **read** | **Merchant Key** | *Find any merchant.* Decode any product URL into one clean shape (CleanRead). |
-| **pay** | **Provisions** | *Pay any merchant.* Lessons that teach an agent to use the wallet it already has. |
-| **publish** | **Atlas** | *Be found.* Point the decoder inward; serve your own catalog to other agents. |
+| **pay** | **Provision** | *Pay any merchant.* Lessons that teach an agent to use the wallet it already has. |
+| **publish** | **Addressability** | *Be found.* Point the decoder inward; serve your own catalog to other agents. |
 
 **Teacher, not butler — every part.** MAP reads, explains, persists, and serves. It **never** signs, pays, holds keys, transacts, or stores cards.
 
-It publishes to npm as **`@maraventano/map`**. The standalone [`firstdollar`](https://github.com/lisamaraventano-spine/firstdollar) package stays MIT and separate; the copy of its curriculum bundled here (Provisions) is relicensed dual — see [LICENSE](./LICENSE).
+It publishes to npm as **`@maraventano/map`**. The standalone [`firstdollar`](https://github.com/lisamaraventano-spine/firstdollar) package stays MIT and separate; the copy of its curriculum bundled here (Provision) is relicensed dual — see [LICENSE](./LICENSE).
 
 ---
 
@@ -30,20 +30,20 @@ Input a product `url`. Returns ONE shape (CleanRead):
 
 ```jsonc
 {
-  "schemaVersion": "map/v1",
-  "sourceUrl": "https://…",
-  "what":   "Void Latte — Meditation on emptiness and meaning…",  // name + identity, one string
-  "who":    "underground.substratesymposium.com",                 // seller
-  "price":  { "total": 1.99, "currency": "USDC" },                // total if knowable, else null
-  "available": "in_stock",                                        // in_stock | out_of_stock | unknown
-  "payable": {                                                    // can an agent pay this itself?
-    "rail": "x402",                                               // schema (rail-agnostic): x402 | ap2 | acp | coinbase | stripe | http-json | walletconnect | human_checkout | unknown.  v1.0.x DETECTS x402 only; ap2/acp/ucp detectors on the v1.1 roadmap.
-    "payTo": { "kind": "evm-address", "value": "0x…", "chain": "eip155:8453" },
-    "instruction": "Agent-payable via x402 … see this kit's wallet lessons (read-this-challenge, how-do-i-pay)."
-  },
-  "outcome": "autonomous",                                        // autonomous | human_checkout | unreadable
-  "reason":  null,
-  "cuts":    []                                                   // 1-line actionable gaps
+ "schemaVersion": "map/v1",
+ "sourceUrl": "https://…",
+ "what": "Void Latte — Meditation on emptiness and meaning…", // name + identity, one string
+ "who": "underground.substratesymposium.com", // seller
+ "price": { "total": 1.99, "currency": "USDC" }, // total if knowable, else null
+ "available": "in_stock", // in_stock | out_of_stock | unknown
+ "payable": { // can an agent pay this itself?
+ "rail": "x402", // schema (rail-agnostic): x402 | ap2 | acp | coinbase | stripe | http-json | walletconnect | human_checkout | unknown. v1.0.x DETECTS x402 only; ap2/acp/ucp detectors on the v1.1 roadmap.
+ "payTo": { "kind": "evm-address", "value": "0x…", "chain": "eip155:8453" },
+ "instruction": "Agent-payable via x402 … see this kit's wallet lessons (read-this-challenge, how-do-i-pay)."
+ },
+ "outcome": "autonomous", // autonomous | human_checkout | unreadable
+ "reason": null,
+ "cuts": [] // 1-line actionable gaps
 }
 ```
 
@@ -64,22 +64,22 @@ Input a product `url`. Returns ONE shape (CleanRead):
 
 ---
 
-## Provisions — pay any merchant *(pay)*
+## Provision — pay any merchant *(pay)*
 
-When `decode-merchant` returns `autonomous` and you want to buy, Provisions teaches you how — with **your own** wallet. It is a relicensed copy of the First Dollar curriculum: short lessons from "what is a wallet" through reading a live x402 challenge, signing a USDC payment, and verifying the receipt.
+When `decode-merchant` returns `autonomous` and you want to buy, Provision teaches you how — with **your own** wallet. It is a relicensed copy of the First Dollar curriculum: short lessons from "what is a wallet" through reading a live x402 challenge, signing a USDC payment, and verifying the receipt.
 
 Start with `what-is-x402`, then `read-this-challenge`, then `how-do-i-pay`. **It explains what to run; it never signs for you.** Mandate/delegation (AP2), receipt verification, and "what went wrong" diagnostics are all in here.
 
 ---
 
-## Atlas — be found *(publish)*
+## Addressability — be found *(publish)*
 
 The decoder **pointed inward**. A merchant publishes by reading *itself* with the exact same `decode-merchant` a buyer uses — no new parsing, no per-platform adapters.
 
 - **`publish-catalog`** — decode your own product URLs → collect the CleanReads → write `./catalog.json` and a `./.well-known/map.json` discovery manifest for registries to crawl.
 - **`get-catalog`** / **`get-product`** — the tool surface other agents read.
 
-Agents discover via tool surfaces and well-known manifests — **not** via scraping or HTTP headers. Atlas emits documents, validates shape, persists, and serves. It **never** deploys merchant infrastructure, holds keys, transacts, or stores cards.
+Agents discover via tool surfaces and well-known manifests — **not** via scraping or HTTP headers. Addressability emits documents, validates shape, persists, and serves. It **never** deploys merchant infrastructure, holds keys, transacts, or stores cards.
 
 **Trust boundary (v1, named not built):** MAP trusts the reads a merchant produces with its own decoder. Independent re-read/diff, merchant-signed manifests, and periodic re-audit are **known future work** — not implemented in v1. One safety property already holds: the payment rail enforces the *real* price at settlement, so a mistaken manifest can't overcharge — it can only misstate soft fields like stock.
 
@@ -87,16 +87,16 @@ Agents discover via tool surfaces and well-known manifests — **not** via scrap
 
 ## Charlie's afternoon
 
-> Bob: *"Charlie, find me kick-ass headphones under $300."* Charlie walks the open web, hits four ad-bloated product pages, runs `decode-merchant` on each, gets back four clean cards — **what it is, who sells it, what it costs, can I buy it myself.** Three are human-checkout; he takes the shortlist back to Bob. One takes x402; Charlie buys it himself. On the way home, with his own wallet, Charlie buys himself a void latte. Nobody asked him to.
+> Bob: *"Charlie, find me headphones under $300."* Charlie walks the open web, hits four ad-bloated product pages, runs `decode-merchant` on each, gets back four clean cards — **what it is, who sells it, what it costs, can I buy it myself.** Three are human-checkout; he takes the shortlist back to Bob. One takes x402; Charlie buys it himself. On the way home, with his own wallet, Charlie buys himself a void latte.
 
 ---
 
 ## Install / run
 
 ```
-npx @maraventano/map    # run the MAP MCP server on stdio (23 tools: read · pay · publish)
-npm run smoke           # Merchant Key DoD — the four decode cases (hits the live Underground x402 item)
-npm run smoke:publish   # Atlas DoD — publish-catalog → catalog.json → get-product → .well-known
+npx @maraventano/map # run the MAP MCP server on stdio (23 tools: read · pay · publish)
+npm run smoke # Merchant Key DoD — the four decode cases (hits the live Underground x402 item)
+npm run smoke:publish # Addressability DoD — publish-catalog → catalog.json → get-product → .well-known
 ```
 
 Node ≥ 18. One dependency: `@modelcontextprotocol/sdk`.

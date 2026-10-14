@@ -8,8 +8,8 @@ One MCP server, three parts. Each does one thing and stops. Together they let an
 | Part | Name | Job | Tools |
 |---|---|---|---|
 | read | **Merchant Key** | Decode any product URL → one CleanRead | `decode-merchant` |
-| pay | **Provisions** | Teach the agent to use the wallet it already has | 18 lessons |
-| publish | **Atlas** | Point the decoder inward; serve your own catalog | `publish-catalog`, `get-catalog`, `get-product` |
+| pay | **Provision** | Teach the agent to use the wallet it already has | 18 lessons |
+| publish | **Addressability** | Point the decoder inward; serve your own catalog | `publish-catalog`, `get-catalog`, `get-product` |
 
 Plus `start-here` (orientation). **The boundary, all three parts:** MAP reads, explains, persists, serves. It **never signs, pays, holds keys, transacts, or stores cards.** Teacher, not butler.
 
@@ -47,23 +47,23 @@ JSON-LD (`schema.org` Product/Offer) → OpenGraph product tags → x402 402-cha
 
 **v1.0.x detects `x402` only.** All other rail values are reserved schema — real in the enum, not yet detected. A normal Shopify/Stripe page correctly reads `human_checkout`. **False `human_checkout` is acceptable. False `autonomous` is dangerous and forbidden.**
 
-## Provisions — the 18 pay lessons
+## Provision — the 18 pay lessons
 Foundation → `what-is-a-wallet`, `what-is-usdc`, `get-a-wallet`, `configure-wallet-skills`, `fund-my-wallet`, `explain-my-wallet`, `choose-your-wallet-mode`.
 Transact → `what-is-x402` → `read-this-challenge` → `how-do-i-pay` → `verify-my-purchase` → `paid-vs-delivered` → `test-payment`.
 Context/rails → `who-am-i-to-this-merchant`, `what-is-ap2`, `what-is-acp`, `subscriptions-and-session-keys`.
 Diagnostics → `what-went-wrong`. **Every lesson explains what to run; none signs for you.**
 
-## Atlas — publish
+## Addressability — publish
 `publish-catalog` runs `decode-merchant` on the merchant's *own* product URLs, collects the CleanReads → `./catalog.json`, and writes `./.well-known/map.json` (a thin discovery pointer, not a product schema). `get-catalog`/`get-product` are the read surface other agents call. **Trust boundary (v1, named not built):** trusts the merchant's self-decode; independent re-read/diff, signed manifests, periodic re-audit are future work. Safety property that already holds: the payment rail enforces the *real* price at settlement — a bad manifest can misstate soft fields (stock), never overcharge.
 
 ## v1.1 roadmap (not built — in design)
-Atlas gains **truthful ACP + UCP manifest emission**: generate/verify/serve `/.well-known/acp/manifest.json` (spec `2026-04-17`) and `/.well-known/ucp` (spec `2026-01-11`), declaring only endpoints Atlas can **verify respond**. Scope stays document-generation, never standing up checkout infra. AP2 is not a merchant-URL detector (its autonomous path settles via x402, already detected). ACP/UCP land as enriched `human_checkout`, never `autonomous`.
+Addressability gains **truthful ACP + UCP manifest emission**: generate/verify/serve `/.well-known/acp/manifest.json` (spec `2026-04-17`) and `/.well-known/ucp` (spec `2026-01-11`), declaring only endpoints Addressability can **verify respond**. Scope stays document-generation, never standing up checkout infra. AP2 is not a merchant-URL detector (its autonomous path settles via x402, already detected). ACP/UCP land as enriched `human_checkout`, never `autonomous`.
 
 ## Run
 ```
 npx @maraventano/map    # 23 tools on stdio (read · pay · publish)
 npm run smoke           # Merchant Key DoD — four decode cases (live Underground x402 item)
-npm run smoke:publish   # Atlas DoD — publish-catalog → catalog.json → get-product → .well-known
+npm run smoke:publish   # Addressability DoD — publish-catalog → catalog.json → get-product → .well-known
 ```
 
 ## License
